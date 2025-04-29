@@ -337,6 +337,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                 ),
               ),
             ),
+          if (widget.bufferIndicator != null) widget.bufferIndicator!,
           if (!controller.flags.hideControls) ...[
             TouchShutter(
               disableDragSeek: controller.flags.disableDragSeek,
