@@ -57,6 +57,8 @@ class YoutubePlayer extends StatefulWidget {
     this.actionsPadding = const EdgeInsets.all(8.0),
     this.thumbnail,
     this.showVideoProgressIndicator = false,
+    this.playPauseButton,
+    this.errorWidget,
   })  : progressColors = progressColors ?? const ProgressBarColors(),
         progressIndicatorColor = progressIndicatorColor ?? Colors.red;
 
@@ -147,6 +149,9 @@ class YoutubePlayer extends StatefulWidget {
   /// Default is false.
   /// {@endtemplate}
   final bool showVideoProgressIndicator;
+
+  final Widget? playPauseButton;
+  final Widget? errorWidget;
 
   /// Converts fully qualified YouTube Url to video id.
   ///
@@ -395,8 +400,8 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
             ),
           ],
           if (!controller.flags.hideControls)
-            const Center(child: PlayPauseButton()),
-          if (controller.value.hasError) errorWidget,
+            widget.playPauseButton ?? const Center(child: PlayPauseButton()),
+          if (controller.value.hasError) widget.errorWidget ?? errorWidget,
         ],
       ),
     );
