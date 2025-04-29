@@ -353,7 +353,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                     : 0,
                 duration: const Duration(milliseconds: 300),
                 child: controller.flags.isLive
-                    ? (widget.bottomActions ?? _buildLiveBottomBar())
+                    ? _buildLiveBottomBar()
                     : _buildBottomBar(),
               ),
             ),
