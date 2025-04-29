@@ -353,11 +353,12 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                     : 0,
                 duration: const Duration(milliseconds: 300),
                 child: controller.flags.isLive
-                    ? LiveBottomBar(
-                        liveUIColor: widget.liveUIColor,
-                        showLiveFullscreenButton:
-                            widget.controller.flags.showLiveFullscreenButton,
-                      )
+                    ? widget.bottomActions ??
+                        LiveBottomBar(
+                          liveUIColor: widget.liveUIColor,
+                          showLiveFullscreenButton:
+                              widget.controller.flags.showLiveFullscreenButton,
+                        )
                     : Padding(
                         padding: widget.bottomActions == null
                             ? const EdgeInsets.all(0.0)
