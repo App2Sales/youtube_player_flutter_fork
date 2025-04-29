@@ -353,32 +353,8 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                     : 0,
                 duration: const Duration(milliseconds: 300),
                 child: controller.flags.isLive
-                    ? widget.bottomActions ??
-                        LiveBottomBar(
-                          liveUIColor: widget.liveUIColor,
-                          showLiveFullscreenButton:
-                              widget.controller.flags.showLiveFullscreenButton,
-                        )
-                    : Padding(
-                        padding: widget.bottomActions == null
-                            ? const EdgeInsets.all(0.0)
-                            : widget.actionsPadding,
-                        child: Row(
-                          children: widget.bottomActions ??
-                              [
-                                const SizedBox(width: 14.0),
-                                const CurrentPosition(),
-                                const SizedBox(width: 8.0),
-                                ProgressBar(
-                                  isExpanded: true,
-                                  colors: widget.progressColors,
-                                ),
-                                const RemainingDuration(),
-                                const PlaybackSpeedButton(),
-                                const FullScreenButton(),
-                              ],
-                        ),
-                      ),
+                    ? (widget.bottomActions ?? _buildLiveBottomBar())
+                    : _buildBottomBar(),
               ),
             ),
             Positioned(
@@ -405,6 +381,42 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
           if (controller.value.hasError) widget.errorWidget ?? errorWidget,
         ],
       ),
+    );
+  }
+
+  Widget _buildLiveBottomBar() {
+    if (widget.bottomActions != null) {
+      return Row(
+        children: widget.bottomActions!,
+      );
+    }
+    return LiveBottomBar(
+      liveUIColor: widget.liveUIColor,
+      showLiveFullscreenButton:
+          widget.controller.flags.showLiveFullscreenButton,
+    );
+  }
+
+  Widget _buildBottomBar() {
+    final actions = widget.bottomActions ??
+        [
+          const SizedBox(width: 14.0),
+          const CurrentPosition(),
+          const SizedBox(width: 8.0),
+          ProgressBar(
+            isExpanded: true,
+            colors: widget.progressColors,
+          ),
+          const RemainingDuration(),
+          const PlaybackSpeedButton(),
+          const FullScreenButton(),
+        ];
+
+    return Padding(
+      padding: widget.bottomActions == null
+          ? const EdgeInsets.all(0.0)
+          : widget.actionsPadding,
+      child: Row(children: actions),
     );
   }
 
